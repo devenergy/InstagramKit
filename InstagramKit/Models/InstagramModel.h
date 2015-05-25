@@ -88,6 +88,7 @@
 #define kNextCursor @"next_cursor"
 
 #define kMaxId @"max_id"
+#define kMinId @"min_id"
 #define kMaxLikeId @"max_like_id"
 #define kMaxTagId @"max_tag_id"
 #define kCursor @"cursor"

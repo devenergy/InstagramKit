@@ -108,4 +108,8 @@
     return [super isEqualToModel:media];
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"InstagramMedia { id: %@, caption: %@ }", self.Id, self.caption];
+}
+
 @end

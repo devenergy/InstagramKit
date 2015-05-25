@@ -184,6 +184,12 @@ sourceApplication
                      success:(InstagramMediaBlock)success
                      failure:(InstagramFailureBlock)failure;
 
+- (void)getSelfFeedWithCount:(NSInteger)count
+                       minId:(NSString *)minId
+                       maxId:(NSString *)maxId
+                     success:(InstagramMediaBlock)success
+                     failure:(InstagramFailureBlock)failure;
+
 #pragma mark -
 
 

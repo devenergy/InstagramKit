@@ -415,7 +415,11 @@ typedef enum
                      }];
 }
 
-- (NSDictionary *)parametersFromCount:(NSInteger)count maxId:(NSString *)maxId andMaxIdType:(MaxIdKeyType)keyType
+- (NSDictionary *)parametersFromCount:(NSInteger)count maxId:(NSString *)maxId andMaxIdType:(MaxIdKeyType)keyType {
+    return [self parametersFromCount:count minId:nil maxId:maxId andMaxIdType:keyType];
+}
+
+- (NSDictionary *)parametersFromCount:(NSInteger)count minId:(NSString *)minId maxId:(NSString *)maxId andMaxIdType:(MaxIdKeyType)keyType
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)count], kCount, nil];
     if (maxId) {
@@ -436,6 +440,11 @@ typedef enum
         }
         [params setObject:maxId forKey:key];
     }
+    
+    if (minId) {
+        [params setObject:minId forKey:kMinId];
+    }
+    
     return [NSDictionary dictionaryWithDictionary:params];
 }
 
@@ -659,6 +668,28 @@ typedef enum
 		{
 			failure(error, statusCode);
 		}
+    }];
+}
+
+
+- (void)getSelfFeedWithCount:(NSInteger)count
+                       minId:(NSString *)minId
+                       maxId:(NSString *)maxId
+                     success:(InstagramMediaBlock)success
+                     failure:(InstagramFailureBlock)failure
+{
+    NSDictionary *params = [self parametersFromCount:count minId:minId maxId:maxId andMaxIdType:kPaginationMaxId];
+    [self getPath:[NSString stringWithFormat:@"users/self/feed"] parameters:params responseModel:[InstagramMedia class] success:^(id response, InstagramPaginationInfo *paginationInfo) {
+        if(success)
+        {
+            NSArray *objects = response;
+            success(objects, paginationInfo);
+        }
+    } failure:^(NSError *error, NSInteger statusCode) {
+        if(failure)
+        {
+            failure(error, statusCode);
+        }
     }];
 }
 

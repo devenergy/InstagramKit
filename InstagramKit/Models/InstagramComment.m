@@ -39,5 +39,8 @@
     return [super isEqualToModel:comment];
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"InstagramComment { id: %@, text: %@ }", self.Id, self.text];
+}
 
 @end
